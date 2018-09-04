@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apa itu Array?</title>
+</head>
+<body>
+    <h3>0 Todo</h3>
+    <ul id="list">
+        
+    </ul>
+
+    <input id="input-todo" placeholder>
+    <button id="add-button" type="submit">Add</button>
+
+
+<script>
+    let todos=[];
+    const listDOM=document.getElementById('list');
+    const inputDOM = document.getElementById('input-todo');
+    const addDOM = document.getElementById('add-button');
+    
+    const data = JSON.parse(localStorage.getItem('todos'))
+    console.log(data);
+    //todos = data;
+    if (data == null){
+    todos = []
+    } else {
+    todos= data
+    }
+
+
+    function render(){
+        let index = 0;
+        listDOM.innerHTML="";
+        while (index < todos.length){
+        console.log(index)
+        listDOM.innerHTML+='<li><input onchange="statusBerubah[+index+]" type="checkbox">'+ todos[index].nama +'<button onclick="hapus('+index+')">Delete</button></li>'
+        index = index + 1
+        }
+    }
+   
+    
+    addDOM.addEventListener('click', function(){
+        const todo = {
+            nama: inputDOM.value,
+            status: false
+        };
+        
+        todos.push(todo)
+        console.log(todos)
+        render();
+        localStorage.setItem('todos',JSON.stringify(todos));
+    })
+
+    
+   
+    function hapus(p){
+        todos.splice(p,1)
+        render();
+        localStorage.setItem('todos',JSON.stringify(todos));
+    }
+
+    function statusBerubah(index){
+        console.log(index);
+        if (todos[index].status == true){
+            todos[index].status == false
+        } else {
+            todos[index].status == true
+        }
+        render();
+        localStorage.setItem('todos',JSON.stringify(todos));
+    }
+
+</script>
+    
+</body>
+</html>
